@@ -13,7 +13,6 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [fullName, setFullName] = useState("");
 
-
   const logoutHandler = () => {
 
 
@@ -21,7 +20,7 @@ function App() {
 
   return (
     <div>
-{/* <Login/>         
+      {/* <Login/>         
 <Signup/>
 <Gallery/>
 <Home/>
@@ -53,7 +52,8 @@ function App() {
         </Routes>
         :
         <Routes>
-          <Route path="/" element={<Login set={setIsLogin}/>} />
+          {/* ////set={setIsLogin} */}
+          <Route path="/" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>

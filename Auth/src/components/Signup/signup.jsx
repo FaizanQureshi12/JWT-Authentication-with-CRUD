@@ -12,7 +12,7 @@ function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-      const signupHandler = async (e) => {
+    const signupHandler = async (e) => {
         e.preventDefault();
         try {
             let response = await axios.post(`${baseUrl}/signup`, {

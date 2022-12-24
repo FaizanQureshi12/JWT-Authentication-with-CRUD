@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, TextField } from '@mui/material';
 
-// const baseUrl = 'http://localhost:5001'
+const baseUrl = 'http://localhost:6001'
 
 function Login() {
 
@@ -13,29 +13,25 @@ function Login() {
 
     const loginHandler = async (e) => {
         e.preventDefault();
-
-        // try {
-        //     let response = await axios.post(`${baseUrl}/login`, {
-        //         email: email,
-        //         password: password
-        //     }, {
-        //         withCredentials: true
-        //     })
-        //     console.log("login successful");
-        //     setResult("login successful")
-        // } catch (e) {
-        //     console.log("e: ", e);
-        // }
-        // // e.reset();
+        try {
+            let response = await axios.post(`${baseUrl}/login`, {
+                email: email,
+                password: password
+            }, {
+                withCredentials: true
+            })
+            console.log("login successful");
+            setResult("login successful")
+        } catch (e) {
+            console.log("e: ", e);
+        }
+        // e.reset();
     }
-
 
     return (
         <>
             <h4>This is Login page</h4>
-
             <form onSubmit={loginHandler} className="loginForm">
-
 
                 <TextField
                     className="TextField"
@@ -48,8 +44,6 @@ function Login() {
                     autoComplete="username"
                     onChange={(e) => { setEmail(e.target.value) }}
                 />
-
-
                 <br />
 
                 <TextField
@@ -63,13 +57,9 @@ function Login() {
                     placeholder="password"
                     onChange={(e) => { setPassword(e.target.value) }}
                 />
-
                 <br />
                 <Button variant="outlined" type="submit">Login</Button>
-
             </form>
-
-
             <p>{result}</p>
         </>
     )
