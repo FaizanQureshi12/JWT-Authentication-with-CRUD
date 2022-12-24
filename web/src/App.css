@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  background-size: 100% 100%;
+  background-position: center;
+  background-attachment: fixed;
+  background-image: url('https://source.unsplash.com/1600x900/?weather')
+}
+
+#get {
+  background-color: rgb(156, 89, 219);
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: large;
+}
+
+#put {
+  background-color: aliceblue;
+  border: none;
+  padding: 4px;
+  border-radius: 10px;
+  height: 35px;
+  margin: 13px;
+  width: 250px;
+}
+
+#bttn {
+  margin: 15px;
+  background-color: aquamarine;
+  border-radius: 15px;
+  height: 40px;
+  font-weight: 600;
+  font-size: larger;
+}
+
+#result {
+  background-color: antiquewhite;
+  border-radius: 10px;
+  padding: 20px;
+}
