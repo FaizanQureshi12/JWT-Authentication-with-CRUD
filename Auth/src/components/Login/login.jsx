@@ -1,5 +1,6 @@
-import { useState } from "react";
-// import './login.css'
+import { useState,useContext } from "react";
+import { GlobalContext } from '../context/Context';
+// import './login.css'  
 import axios from "axios";
 import { Button, TextField } from '@mui/material';
 
@@ -7,12 +8,15 @@ const baseUrl = 'http://localhost:6001'
 
 function Login() {
 
+    let { state, dispatch } = useContext(GlobalContext);
+
     const [result, setResult] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const loginHandler = async (e) => {
         e.preventDefault();
+
         try {
             let response = await axios.post(`${baseUrl}/login`, {
                 email: email,
@@ -20,10 +24,19 @@ function Login() {
             }, {
                 withCredentials: true
             })
+            dispatch({
+                type:'USER_LOGIN',
+                payload:null
+            })
+
             console.log("login successful");
             setResult("login successful")
-        } catch (e) {
-            console.log("e: ", e);
+
+        } catch (error) {
+            // console.info(error);
+            console.log(error.name);
+            console.log(error.message);
+            console.log(error.response.data);
         }
         // e.reset();
     }
@@ -31,6 +44,7 @@ function Login() {
     return (
         <>
             <h4>This is Login page</h4>
+            {state.text}
             <form onSubmit={loginHandler} className="loginForm">
 
                 <TextField

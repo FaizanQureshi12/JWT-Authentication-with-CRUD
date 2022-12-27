@@ -1,5 +1,4 @@
 import express from "express"
-import path from 'path'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
@@ -16,7 +15,6 @@ const port = process.env.PORT || 6001;
 const mongodbURI = process.env.mongodbURI || "mongodb+srv://faizan:asfan@cluster0.5ih6sce.mongodb.net/?retryWrites=true&w=majority";
 console.log('hello world as module javascript')
 
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -167,6 +165,10 @@ app.post("/login", (req, res) => {
                 return;
             }
         })
+})
+
+app.post("/profile",(req,res)=>{
+    res.send('Hello World!')
 })
 
 app.post("/logout", (req, res) => {

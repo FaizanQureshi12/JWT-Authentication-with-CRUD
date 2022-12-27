@@ -1,22 +1,47 @@
 import './App.css';
+import axios from 'axios';
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
 import Home from "./components/home";
 import Gallery from "./components/gallery";
 import About from "./components/about";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { GlobalContext } from './components/context/Context';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 
 function App() {
+  let { state, dispatch } = useContext(GlobalContext);
 
-  const [isLogin, setIsLogin] = useState(false);
   const [fullName, setFullName] = useState("");
 
   const logoutHandler = () => {
 
 
+
   }
+
+  useEffect(() => {
+    const baseUrl = 'http://localhost:6001'
+    const getProfile = async () => {
+    try {
+      let response = await axios.get(`${baseUrl}/profile`, {
+        withCredentials: true
+      })
+      console.log('response:',response)
+      dispatch({
+        type: 'USER_LOGIN'
+      })
+    } catch (error) {
+      console.log('axios error:', error)
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+    }
+   
+    }
+    getProfile();
+  }, [])
 
   return (
     <div>
@@ -27,7 +52,7 @@ function App() {
 <About/> */}
 
       {
-        (isLogin) ?
+        (state.isLogin === true) ?
           <ul className='navBar'>
             <li> <Link to={`/`}>Home</Link> </li>
             <li> <Link to={`/gallery`}>Gallery</Link> </li>
@@ -36,13 +61,18 @@ function App() {
             <li> {fullName} <button onClick={logoutHandler}>Logout</button> </li>
           </ul>
           :
+          null
+      }
+      {
+        (state.isLogin === false) ?
           <ul className='navBar'>
             <li> <Link to={`/`}>Login</Link> </li>
             <li> <Link to={`/signup`}>Signup</Link> </li>
           </ul>
+          : null
       }
 
-      {(isLogin) ?
+      {(state.isLogin===true) ?
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -50,15 +80,24 @@ function App() {
           <Route path="gallery" element={<Gallery />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
-        :
-        <Routes>
-          {/* ////set={setIsLogin} */}
+        : null } 
+        
+        {
+          (state.isLogin===false)?
+         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
-      }
+        : null }
 
+        {(state.isLogin===null)?
+        
+        <img src='images/Loading_icon.gif' className='Loading_icon' alt=''/>
+            
+        : null
+        }
+      
     </div>
   );
 }

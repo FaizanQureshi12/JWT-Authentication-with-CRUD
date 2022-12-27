@@ -1,9 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 
-
 const baseUrl = 'http://localhost:6001'
-
 
 function Signup() {
 
@@ -29,7 +27,6 @@ function Signup() {
         }
         // e.reset();
     }
-
 
     return (
         <>
