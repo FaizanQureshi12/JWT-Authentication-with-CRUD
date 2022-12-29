@@ -222,8 +222,8 @@ app.use( '/api/v1' ,(req, res, next) => {
 // //http://192.168.43.166:3000
 
 const __dirname = path.resolve();
-app.use('/', express.static(path.join(__dirname, './web/build')))
-app.use('*', express.static(path.join(__dirname, './web/build')))
+app.use('/', express.static(path.join(__dirname, './Auth/build')))
+app.use('*', express.static(path.join(__dirname, './Auth/build')))
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
