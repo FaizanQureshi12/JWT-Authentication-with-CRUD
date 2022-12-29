@@ -4,7 +4,7 @@ import { GlobalContext } from '../context/Context';
 import axios from "axios";
 import { Button, TextField } from '@mui/material';
 
-const baseUrl = 'http://localhost:6001'
+const baseUrl = 'http://localhost:6001/api/v1'
 
 function Login() {
 

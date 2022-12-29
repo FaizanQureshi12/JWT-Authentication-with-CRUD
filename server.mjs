@@ -1,4 +1,5 @@
 import express from "express"
+import path from 'path'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: ['http://localhost:3000', "*"],
+    origin: ['http://localhost:3000', 'https://localhost:3000', "*"],
     credentials: true
 }));
 
@@ -41,7 +42,7 @@ const userSchema = new mongoose.Schema({
 });
 const userModel = mongoose.model('Users', userSchema);
 
-app.post("/signup", (req, res) => {
+app.post("/api/v1/signup", (req, res) => {
 
     let body = req.body;
     if (!body.firstName
@@ -98,7 +99,7 @@ app.post("/signup", (req, res) => {
     })
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/v1/login", (req, res) => {
     let body = req.body;
     body.email = body.email.toLowerCase();
     if (!body.email || !body.password) { // null check - undefined, "", 0 , false, null , NaN
@@ -135,7 +136,9 @@ app.post("/login", (req, res) => {
 
                             res.cookie('Token', token, {
                                 maxAge: 86_400_000,
-                                httpOnly: true
+                                httpOnly: true,
+                                sameSite: 'none',
+                                secure: true
                             });
                             res.send({
                                 message: "login successful",
@@ -167,19 +170,21 @@ app.post("/login", (req, res) => {
         })
 })
 
-app.post("/profile",(req,res)=>{
+app.post("/api/v1/profile",(req,res)=>{
     res.send('Hello World!')
 })
 
-app.post("/logout", (req, res) => {
+app.post("/api/v1/logout", (req, res) => {
     res.cookie('Token', '', {
         maxAge: 1,
-        httpOnly: true
+        httpOnly: true,
+        sameSite:'none',
+        secure:true
     });
     res.send({ message: "Logout successful" });
 })
 
-app.use(function (req, res, next) {
+app.use( '/api/v1' ,(req, res, next) => {
     console.log("req.cookies: ", req.cookies);
 
     if (!req?.cookies?.Token) {
@@ -197,7 +202,9 @@ app.use(function (req, res, next) {
                 res.status(401);
                 res.cookie('Token', '', {
                     maxAge: 1,
-                    httpOnly: true
+                    httpOnly: true,
+                    sameSite:'none',
+                    secure:true
                 });
                 res.send({ message: "token expired" })
             } else {
@@ -213,6 +220,10 @@ app.use(function (req, res, next) {
 
 // //Ip Address From Network properties
 // //http://192.168.43.166:3000
+
+const __dirname = path.resolve();
+app.use('/', express.static(path.join(__dirname, './web/build')))
+app.use('*', express.static(path.join(__dirname, './web/build')))
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

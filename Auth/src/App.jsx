@@ -2,6 +2,7 @@ import './App.css';
 import axios from 'axios';
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
+import Profile from './components/Profile/profile'
 import Home from "./components/home";
 import Gallery from "./components/gallery";
 import About from "./components/about";
@@ -11,45 +12,52 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 
 function App() {
-  let { state, dispatch } = useContext(GlobalContext);
+  const baseUrl = 'http://localhost:6001/api/v1'
 
+  let { state, dispatch } = useContext(GlobalContext);
   const [fullName, setFullName] = useState("");
 
-  const logoutHandler = () => {
+  const logoutHandler = async() => {
 
+    try {
+      let response = await axios.post(`${baseUrl}/logout`, {
+        withCredentials: true
+      })
+      console.log('response:', response)
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+    } catch (error) {
+      console.log('axios error:', error)
+         }
 
 
   }
 
   useEffect(() => {
-    const baseUrl = 'http://localhost:6001'
     const getProfile = async () => {
-    try {
-      let response = await axios.get(`${baseUrl}/profile`, {
-        withCredentials: true
-      })
-      console.log('response:',response)
-      dispatch({
-        type: 'USER_LOGIN'
-      })
-    } catch (error) {
-      console.log('axios error:', error)
-      dispatch({
-        type: 'USER_LOGOUT'
-      })
-    }
-   
+      try {
+        let response = await axios.get(`${baseUrl}/profile`, {
+          withCredentials: true
+        })
+        console.log('response:', response)
+        dispatch({
+          type: 'USER_LOGIN'
+        })
+      } catch (error) {
+        console.log('axios error:', error)
+        dispatch({
+          type: 'USER_LOGOUT'
+        })
+      }
+
     }
     getProfile();
   }, [])
 
   return (
     <div>
-      {/* <Login/>         
-<Signup/>
-<Gallery/>
-<Home/>
-<About/> */}
+{/* <Profile/> */}
 
       {
         (state.isLogin === true) ?
@@ -72,32 +80,33 @@ function App() {
           : null
       }
 
-      {(state.isLogin===true) ?
+      {(state.isLogin === true) ?
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="gallery" element={<Gallery />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
-        : null } 
-        
-        {
-          (state.isLogin===false)?
-         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="*" element={<Navigate to="/" replace={true} />} />
-        </Routes>
-        : null }
+        : null}
 
-        {(state.isLogin===null)?
-        
-        <img src='images/Loading_icon.gif' className='Loading_icon' alt=''/>
-            
+      {
+        (state.isLogin === false) ?
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="*" element={<Navigate to="/" replace={true} />} />
+          </Routes>
+          : null}
+
+      {(state.isLogin === null) ?
+
+        <img src='images/Loading_icon.gif' className='Loading_icon' alt='' />
+
         : null
-        }
-      
+      }
+
     </div>
   );
 }
