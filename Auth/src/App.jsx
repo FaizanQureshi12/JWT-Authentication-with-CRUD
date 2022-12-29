@@ -12,7 +12,6 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 
 function App() {
-  const baseUrl = 'http://localhost:6001/api/v1'
 
   let { state, dispatch } = useContext(GlobalContext);
   const [fullName, setFullName] = useState("");
@@ -20,7 +19,7 @@ function App() {
   const logoutHandler = async() => {
 
     try {
-      let response = await axios.post(`${baseUrl}/logout`, {
+      let response = await axios.post(`${state.baseUrl}/logout`, {
         withCredentials: true
       })
       console.log('response:', response)
@@ -37,7 +36,7 @@ function App() {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        let response = await axios.get(`${baseUrl}/profile`, {
+        let response = await axios.get(`${state.baseUrl}/profile`, {
           withCredentials: true
         })
         console.log('response:', response)

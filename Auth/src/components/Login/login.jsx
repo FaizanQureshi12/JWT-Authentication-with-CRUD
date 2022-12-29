@@ -4,8 +4,6 @@ import { GlobalContext } from '../context/Context';
 import axios from "axios";
 import { Button, TextField } from '@mui/material';
 
-const baseUrl = 'http://localhost:6001/api/v1'
-
 function Login() {
 
     let { state, dispatch } = useContext(GlobalContext);
@@ -18,7 +16,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            let response = await axios.post(`${baseUrl}/login`, {
+            let response = await axios.post(`${state.baseUrl}/login`, {
                 email: email,
                 password: password
             }, {
