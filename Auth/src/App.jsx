@@ -16,7 +16,7 @@ function App() {
   let { state, dispatch } = useContext(GlobalContext);
   const [fullName, setFullName] = useState("");
 
-  const logoutHandler = async() => {
+  const logoutHandler = async () => {
 
     try {
       let response = await axios.post(`${state.baseUrl}/logout`, {
@@ -28,9 +28,7 @@ function App() {
       })
     } catch (error) {
       console.log('axios error:', error)
-         }
-
-
+    }
   }
 
   useEffect(() => {
@@ -49,14 +47,12 @@ function App() {
           type: 'USER_LOGOUT'
         })
       }
-
     }
     getProfile();
   }, [])
 
   return (
     <div>
-{/* <Profile/> */}
 
       {
         (state.isLogin === true) ?
@@ -105,7 +101,6 @@ function App() {
 
         : null
       }
-
     </div>
   );
 }

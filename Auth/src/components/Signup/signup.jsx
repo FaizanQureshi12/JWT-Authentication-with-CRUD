@@ -1,7 +1,6 @@
-import { useState,useContext } from "react";
 import axios from 'axios';
+import { useState, useContext } from "react";
 import { GlobalContext } from '../context/Context';
-
 
 function Signup() {
 

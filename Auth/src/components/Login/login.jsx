@@ -1,7 +1,7 @@
-import { useState,useContext } from "react";
-import { GlobalContext } from '../context/Context';
 // import './login.css'  
 import axios from "axios";
+import { useState,useContext } from "react";
+import { GlobalContext } from '../context/Context';
 import { Button, TextField } from '@mui/material';
 
 function Login() {
@@ -26,17 +26,13 @@ function Login() {
                 type:'USER_LOGIN',
                 payload:null
             })
-
             console.log("login successful");
             setResult("login successful")
-
         } catch (error) {
-            // console.info(error);
             console.log(error.name);
             console.log(error.message);
             console.log(error.response.data);
         }
-        // e.reset();
     }
 
     return (
