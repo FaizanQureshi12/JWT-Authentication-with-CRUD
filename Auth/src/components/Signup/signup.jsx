@@ -1,4 +1,5 @@
 import axios from 'axios';
+import './signup.css'
 import { useState, useContext } from "react";
 import { GlobalContext } from '../context/Context';
 
@@ -30,14 +31,16 @@ function Signup() {
     }
 
     return (
-        <>
+        <div className='signbx'>
             <h4>This is Signup page</h4>
 
             <form onSubmit={signupHandler}>
 
-                Name: <input type="text" name="name" placeholder="Enter your name" onChange={(e) => { setName(e.target.value) }} />
+                Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="name" placeholder="Enter your name" onChange={(e) => { setName(e.target.value) }} />
                 <br />
-                Email: <input type="email" name="username" autoComplete="username" placeholder="email" onChange={(e) => { setEmail(e.target.value) }} />
+                Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="email" name="username" autoComplete="username" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
                 <br />
                 Password: <input type="password" name="new-password" autoComplete="new-password" placeholder="password" onChange={(e) => { setPassword(e.target.value) }} />
                 <br />
@@ -46,8 +49,9 @@ function Signup() {
                 <button type="submit">Signup</button>
             </form>
             <p>{result}</p>
-        </>
+        </div>
     )
+
 }
 
 export default Signup;

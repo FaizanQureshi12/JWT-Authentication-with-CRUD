@@ -1,6 +1,6 @@
-// import './login.css'  
+import './login.css'
 import axios from "axios";
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { GlobalContext } from '../context/Context';
 import { Button, TextField } from '@mui/material';
 
@@ -23,8 +23,8 @@ function Login() {
                 withCredentials: true
             })
             dispatch({
-                type:'USER_LOGIN',
-                payload:null
+                type: 'USER_LOGIN',
+                payload: null
             })
             console.log("login successful");
             setResult("login successful")
@@ -36,7 +36,7 @@ function Login() {
     }
 
     return (
-        <>
+        <div className='box'>
             <h4>This is Login page</h4>
             {state.text}
             <form onSubmit={loginHandler} className="loginForm">
@@ -53,6 +53,7 @@ function Login() {
                     onChange={(e) => { setEmail(e.target.value) }}
                 />
                 <br />
+                <br />
 
                 <TextField
                     className="TextField"
@@ -65,11 +66,11 @@ function Login() {
                     placeholder="password"
                     onChange={(e) => { setPassword(e.target.value) }}
                 />
-                <br />
-                <Button variant="outlined" type="submit">Login</Button>
+                <br /> <br />
+                <Button className='btn' variant="outlined" type="submit">Login</Button>
             </form>
             <p>{result}</p>
-        </>
+        </div>
     )
 }
 
